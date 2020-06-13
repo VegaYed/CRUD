@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    
+    <h:head>
+        <title>CRUD</title>
+    </h:head>
+    <h:body>
+        Hello from Facelets
+        
+        <h:form id="form">
+            
+            <h:panelGrid columns="2">
+                
+                <h:outputText value="CODIGO"/>
+                <p:inputText value="#{bean.codigo}" required="true"/>
+                
+                <h:outputText value="DETALLE"/>
+                <p:inputText value="#{bean.detalle}" required="true"/>
+                
+                <h:outputText value="PRECIO"/>
+                <p:inputText value="#{bean.precio}" required="true"/>
+                
+                <p:commandButton actionListener="#{bean.crear()}" update="form" value="CREAR" />
+                
+            </h:panelGrid>
+            
+        </h:form>
+        
+        <p:dataTable value="#{bean.articulos}" var="x">
+            
+            <p:column headerText="CODIGO">
+                <h:outputText value="#{x.codigo}"/>
+            </p:column>
+            
+            <p:column headerText="DETALLE">
+                <h:outputText value="#{x.detalle}"/>
+            </p:column>
+            
+            <p:column headerText="PRECIO">
+                <h:outputText value="#{x.precio}"/>
+            </p:column>
+            
+        </p:dataTable>
+        
+
+    </h:body>
+</html>
+
