@@ -13,7 +13,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import model.ArticuloFacadeLocal;
+import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -27,21 +29,22 @@ public class ArtBean {
     private String detalle;
     private int precio;
     private Articulo arSelected;
-    private Articulo arModif;
+    private Articulo arActualizar;
 
-    public Articulo getArSelected() {
-        return arSelected;
-    }
-
-    public void setArSelected(Articulo arSelected) {
-        this.arSelected = arSelected;
-    }
 
     @EJB
     private ArticuloFacadeLocal articuloFacade;
 
     public ArticuloFacadeLocal getArticuloFacade() {
         return articuloFacade;
+    }
+    
+    public Articulo getArSelected() {
+        return arSelected;
+    }
+
+    public void setArSelected(Articulo arSelected) {
+        this.arSelected = arSelected;
     }
 
     public void setArticuloFacade(ArticuloFacadeLocal articuloFacade) {
@@ -80,26 +83,20 @@ public class ArtBean {
         return precio;
     }
 
-    public Articulo getArModif() {
-        return arModif;
-    }
 
-    public void setArModif(Articulo arModif) {
-        this.arModif = arModif;
-    }
-    
     public void eliminar(){
         articuloFacade.remove(arSelected);
     }
     
-    public void modificar(){
-        articuloFacade.edit(arModif);
-    }
-    
-    public void actulizar(RowEditEvent event){
+    public void onRowSelect(SelectEvent event){
+        
     }
     
     public void cancelar(RowEditEvent event){
+        
+    }
+    
+    public void onCellEdit(CellEditEvent event){
         
     }
 

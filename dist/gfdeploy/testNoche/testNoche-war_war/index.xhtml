@@ -32,10 +32,12 @@
         
         <h:form id="formTable">
             <p:growl id="msg"/>
-            <p:dataTable value="#{bean.articulos}" var="articulos" selectionMode="single" selection="#{bean.arSelected}" rowKey="#{articulos.codigo}">
+            <p:dataTable value="#{bean.articulos}" var="articulos" selectionMode="single" selection="#{bean.arSelected}" rowKey="#{articulos.codigo}"
+                        editable="true" editMode="cell">
  
-                <p:ajax event="rowSelect" listener="#{bean.actulizar}" update=":formTable:msg" />
+                <p:ajax event="rowSelect" listener="#{bean.onRowSelect}" update=":formTable:msg" />
                 <p:ajax event="rowUnselect" listener="#{bean.cancelar}" update=":formTable:msg"/>
+                <p:ajax event="cellEdit" listener="#{bean.onCellEdit}" update=":formTable:msg" />
                 
                 <p:column headerText="CODIGO">
                     <h:outputText value="#{articulos.codigo}"/>
@@ -44,18 +46,18 @@
                 <p:column headerText="DETALLE">
                     <h:outputText value="#{articulos.detalle}"/>
                 </p:column>
-
+                
                 <p:column headerText="PRECIO">
-                    <h:outputText value="#{articulos.precio}"/>
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{articulos.precio}" /></f:facet>
+                        <f:facet name="input"><p:inputText id="modelInput" value="#{bean.precio}" style="width:96%"/></f:facet>
+                    </p:cellEditor>
                 </p:column>
-                
-                
             </p:dataTable>
             
             <p:commandButton actionListener="#{bean.eliminar}" update="formTable" value="ELIMINAR"/>
-            
         </h:form>
-        
+
     </h:body>
 </html>
 
