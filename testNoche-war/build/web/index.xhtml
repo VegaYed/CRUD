@@ -2,8 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      >
+      xmlns:p="http://primefaces.org/ui"          
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     
     <h:head>
         <title>CRUD</title>
@@ -30,23 +30,32 @@
             
         </h:form>
         
-        <p:dataTable value="#{bean.articulos}" var="x">
-            
-            <p:column headerText="CODIGO">
-                <h:outputText value="#{x.codigo}"/>
-            </p:column>
-            
-            <p:column headerText="DETALLE">
-                <h:outputText value="#{x.detalle}"/>
-            </p:column>
-            
-            <p:column headerText="PRECIO">
-                <h:outputText value="#{x.precio}"/>
-            </p:column>
-            
-        </p:dataTable>
-        
+        <h:form id="formTable">
+            <p:growl id="msg"/>
+            <p:dataTable value="#{bean.articulos}" var="articulos" selectionMode="single" selection="#{bean.arSelected}" rowKey="#{articulos.codigo}">
+ 
+                <p:ajax event="rowSelect" listener="#{bean.actulizar}" update=":formTable:msg" />
+                <p:ajax event="rowUnselect" listener="#{bean.cancelar}" update=":formTable:msg"/>
+                
+                <p:column headerText="CODIGO">
+                    <h:outputText value="#{articulos.codigo}"/>
+                </p:column>
+                
+                <p:column headerText="DETALLE">
+                    <h:outputText value="#{articulos.detalle}"/>
+                </p:column>
 
+                <p:column headerText="PRECIO">
+                    <h:outputText value="#{articulos.precio}"/>
+                </p:column>
+                
+                
+            </p:dataTable>
+            
+            <p:commandButton actionListener="#{bean.eliminar}" update="formTable" value="ELIMINAR"/>
+            
+        </h:form>
+        
     </h:body>
 </html>
 

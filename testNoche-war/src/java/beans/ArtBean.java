@@ -10,7 +10,10 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import model.ArticuloFacadeLocal;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -20,29 +23,23 @@ import model.ArticuloFacadeLocal;
 @RequestScoped
 public class ArtBean {
     
-        
+    private int codigo;
+    private String detalle;
+    private int precio;
+    private Articulo arSelected;
+    private Articulo arModif;
 
+    public Articulo getArSelected() {
+        return arSelected;
+    }
+
+    public void setArSelected(Articulo arSelected) {
+        this.arSelected = arSelected;
+    }
 
     @EJB
     private ArticuloFacadeLocal articuloFacade;
 
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public String getDetalle() {
-        return detalle;
-    }
-
-    public int getPrecio() {
-        return precio;
-    }
-
-    
-    private int codigo;
-    private String detalle;
-    private int precio;
-    
     public ArticuloFacadeLocal getArticuloFacade() {
         return articuloFacade;
     }
@@ -71,6 +68,42 @@ public class ArtBean {
         return articuloFacade.findAll();
     }
     
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public String getDetalle() {
+        return detalle;
+    }
+
+    public int getPrecio() {
+        return precio;
+    }
+
+    public Articulo getArModif() {
+        return arModif;
+    }
+
+    public void setArModif(Articulo arModif) {
+        this.arModif = arModif;
+    }
+    
+    public void eliminar(){
+        articuloFacade.remove(arSelected);
+    }
+    
+    public void modificar(){
+        articuloFacade.edit(arModif);
+    }
+    
+    public void actulizar(RowEditEvent event){
+    }
+    
+    public void cancelar(RowEditEvent event){
+        
+    }
+
+
     public void crear(){
         
         Articulo articulo = new Articulo();
